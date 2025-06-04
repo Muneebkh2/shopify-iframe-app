@@ -1,8 +1,16 @@
 // app/routes/index.tsx
-import { json } from "@remix-run/node";
-import { useState, useEffect } from "react";
+import { json, redirect } from "@remix-run/node";
+import { useState } from "react";
+
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import { Page, Layout, Card, Text, Button, Banner } from "@shopify/polaris";
+import {
+  Page,
+  Layout,
+  Card,
+  Text,
+  Button,
+  Banner,
+} from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
 import ProductTable from "../components/ProductTable";
 import type { DataFunctionArgs } from "@remix-run/node";
@@ -37,31 +45,8 @@ export default function Index() {
   }>();
   const fetcher = useFetcher();
 
-  // Local UI state for actions and messages
-  const [actionInProgress, setActionInProgress] = useState<"init" | "inject" | "uninstall" | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [initError, setInitError] = useState<string | null>(null);
 
-  // Listen to changes in fetcher so we know when an action finished
-  useEffect(() => {
-    if (fetcher.state === "idle" && fetcher.data) {
-      if (fetcher.data.success === true && fetcher.data.message) {
-        setSuccessMessage(fetcher.data.message);
-        // Auto dismiss after 5 seconds
-        setTimeout(() => {
-          setSuccessMessage(null);
-        }, 5000);
-      } else if (fetcher.data.success === false) {
-        const errorMessage =
-          fetcher.data.error || fetcher.data.errors?.[0]?.message || "Unknown error";
-        setInitError(errorMessage);
-        setTimeout(() => {
-          setInitError(null);
-        }, 5000);
-      }
-      setActionInProgress(null); // Reset action state after completion
-    }
-  }, [fetcher]);
+  const [actionInProgress, setActionInProgress] = useState<"init" | "inject" | "uninstall" | null>(null);
 
   const initializeApp = () => {
     setActionInProgress("init");
@@ -88,6 +73,14 @@ export default function Index() {
       });
     }
   };
+
+  const initError =
+    fetcher.data && fetcher.data.success === false
+      ? fetcher.data?.error || fetcher.data?.errors?.[0]?.message || "Unknown error"
+      : null;
+
+  const successMessage =
+    fetcher.data && fetcher.data.success === true && fetcher.data?.message;
 
   return (
     <Page title="Iframe URL Manager">
@@ -121,7 +114,7 @@ export default function Index() {
                   tone="critical"
                   variant="primary"
                   loading={actionInProgress === "uninstall" && fetcher.state === "submitting"}
-                  style={{ marginTop: "1rem" }}
+                  style={{ marginTop: '1rem' }}
                 >
                   Uninstall App
                 </Button>
@@ -132,7 +125,8 @@ export default function Index() {
             <Card sectioned>
               <Text variant="headingMd">Initialize the App</Text>
               <Text>
-                Click the button below to create and pin the iframe_url metafield for product variants.
+                Click the button below to create and pin the iframe_url
+                metafield for product variants.
               </Text>
               <Button
                 onClick={initializeApp}

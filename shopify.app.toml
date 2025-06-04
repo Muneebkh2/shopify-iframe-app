@@ -3,33 +3,33 @@
 client_id = "c393b128f241cfa6da9fc68b1abbe163"
 name = "product-iframes"
 handle = "product-iframes"
-application_url = "https://synopsis-accomplished-proudly-humanitarian.trycloudflare.com"
+application_url = "https://guards-behind-ian-drinking.trycloudflare.com"
 embedded = true
 
 [build]
-include_config_on_deploy = true
 automatically_update_urls_on_dev = true
+include_config_on_deploy = true
 
 [webhooks]
 api_version = "2025-04"
 
   [[webhooks.subscriptions]]
-  topics = [ "app/uninstalled" ]
-  uri = "/webhooks/app/uninstalled"
-
-  [[webhooks.subscriptions]]
   topics = [ "app/scopes_update" ]
   uri = "/webhooks/app/scopes_update"
 
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_themes,write_themes,read_products,write_products"
+scopes = "read_products,read_themes,write_products,write_themes"
 
 [auth]
 redirect_urls = [
-  "https://synopsis-accomplished-proudly-humanitarian.trycloudflare.com/auth/callback",
-  "https://synopsis-accomplished-proudly-humanitarian.trycloudflare.com/auth/shopify/callback",
-  "https://synopsis-accomplished-proudly-humanitarian.trycloudflare.com/api/auth/callback"
+  "https://guards-behind-ian-drinking.trycloudflare.com/auth/callback",
+  "https://guards-behind-ian-drinking.trycloudflare.com/auth/shopify/callback",
+  "https://guards-behind-ian-drinking.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
