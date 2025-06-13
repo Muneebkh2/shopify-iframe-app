@@ -1,0 +1,27 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "c7ec21d00666ad9658d02f7c8e50dde4"
+name = "iframer"
+handle = "iframer-1"
+application_url = "http://application.nyle.ai"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+
+[webhooks]
+api_version = "2025-04"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,read_themes,write_products,write_themes"
+
+[auth]
+redirect_urls = [
+  "http://application.nyle.ai/auth/callback",
+  "http://application.nyle.ai/auth/shopify/callback",
+  "http://application.nyle.ai/api/auth/callback"
+]
+
+[pos]
+embedded = false
