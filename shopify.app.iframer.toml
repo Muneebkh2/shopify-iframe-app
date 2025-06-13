@@ -3,7 +3,7 @@
 client_id = "c7ec21d00666ad9658d02f7c8e50dde4"
 name = "iframer"
 handle = "iframer-1"
-application_url = "http://application.nyle.ai"
+application_url = "https://application.nyle.ai"
 embedded = true
 
 [build]
@@ -18,9 +18,9 @@ scopes = "read_products,read_themes,write_products,write_themes"
 
 [auth]
 redirect_urls = [
-  "http://application.nyle.ai/auth/callback",
-  "http://application.nyle.ai/auth/shopify/callback",
-  "http://application.nyle.ai/api/auth/callback"
+  "https://application.nyle.ai/auth/callback",
+  "https://application.nyle.ai/auth/shopify/callback",
+  "https://application.nyle.ai/api/auth/callback"
 ]
 
 [pos]

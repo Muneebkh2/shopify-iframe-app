@@ -1,7 +1,7 @@
 import express from 'express';
 import { createRequestHandler } from '@remix-run/express';
 import * as build from './build/server/index.js';
-import shopify from './app/shopify.server.js';
+import shopify from './app/shopify.server.ts';
 import dotenv from 'dotenv';
 dotenv.config();
 
