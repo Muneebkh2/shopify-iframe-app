@@ -45,3 +45,7 @@ product-info#ProductInfo-template--24656175202616__main {
 .slider-buttons.no-js-hidden.quick-add-hidden.small-hide {
     display: none;
 }
+
+.product--large .product__media-wrapper {
+  max-width: 100% !important;
+}
