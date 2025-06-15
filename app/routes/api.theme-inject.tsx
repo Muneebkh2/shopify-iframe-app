@@ -6,12 +6,20 @@ import { injectCustomCssAsset } from "../utils/themeAssetManager";
 
 
 export const action = async ({ request }: { request: Request }) => {
-  const PRIVATE_APP_TOKEN = process.env.PRIVATE_APP_TOKEN || "";
-  const shop = process.env.SHOPIFY_SHOP_DOMAIN || "";
+  const { session } = await authenticate.admin(request);
+  const PRIVATE_APP_TOKEN = session.accessToken;
+  const shop = session.shop;
 
   if (!PRIVATE_APP_TOKEN || !shop) {
-    return new Response(JSON.stringify({ success: false, errors: ["Missing private app credentials"] }), { status: 500 });
+    return new Response(JSON.stringify({ success: false, errors: ["Missing Shopify authentication"] }), { status: 401 });
   }
+
+  // const PRIVATE_APP_TOKEN = process.env.PRIVATE_APP_TOKEN || "";//
+  // const shop = process.env.SHOPIFY_SHOP_DOMAIN || "";
+
+  // if (!PRIVATE_APP_TOKEN || !shop) {
+  //   return new Response(JSON.stringify({ success: false, errors: ["Missing private app credentials"] }), { status: 500 });
+  // }
 
   // const fetchShopify = async (url: string, options: RequestInit = {}) => {
   //   const res = await fetch(`https://${shop}/admin/api/2024-10/${url}`, {
