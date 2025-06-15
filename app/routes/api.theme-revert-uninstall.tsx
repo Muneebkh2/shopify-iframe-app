@@ -2,6 +2,7 @@ import { json } from "@remix-run/node";
 import fs from "fs/promises";
 import path from "path";
 import { authenticate } from "../shopify.server";
+import { console } from "inspector";
 
 export const action = async ({ request }: { request: Request }) => {
 
@@ -10,6 +11,10 @@ export const action = async ({ request }: { request: Request }) => {
   const shop = session.shop;
   const backupDir = path.resolve("backups"); // Match with your backup path
 
+  console.log("Shopify authentication session:", session);
+  console.log("Private app token:", PRIVATE_APP_TOKEN);
+  console.log("Shop domain:", shop);
+  console.log("Backup directory:", backupDir);
   if (!PRIVATE_APP_TOKEN || !shop) {
     return new Response(JSON.stringify({ success: false, errors: ["Missing Shopify authentication"] }), { status: 401 });
   }
