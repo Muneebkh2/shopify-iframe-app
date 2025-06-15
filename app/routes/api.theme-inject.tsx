@@ -10,6 +10,10 @@ export const action = async ({ request }: { request: Request }) => {
   const PRIVATE_APP_TOKEN = session.accessToken;
   const shop = session.shop;
 
+    console.log("Shopify authentication session:", session);
+    console.log("Private app token:", PRIVATE_APP_TOKEN);
+    console.log("Shop domain:", shop);
+
   if (!PRIVATE_APP_TOKEN || !shop) {
     return new Response(JSON.stringify({ success: false, errors: ["Missing Shopify authentication"] }), { status: 401 });
   }
