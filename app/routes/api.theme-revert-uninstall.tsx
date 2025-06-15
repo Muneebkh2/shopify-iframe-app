@@ -1,15 +1,25 @@
 import { json } from "@remix-run/node";
 import fs from "fs/promises";
 import path from "path";
+import { authenticate } from "../shopify.server";
 
 export const action = async ({ request }: { request: Request }) => {
-  const PRIVATE_APP_TOKEN = process.env.PRIVATE_APP_TOKEN || "";
-  const shop = process.env.SHOPIFY_SHOP_DOMAIN || "";
+
+  const { session } = await authenticate.admin(request);
+  const PRIVATE_APP_TOKEN = session.accessToken;
+  const shop = session.shop;
   const backupDir = path.resolve("backups"); // Match with your backup path
 
   if (!PRIVATE_APP_TOKEN || !shop) {
-    return json({ success: false, error: "Missing private app credentials" }, { status: 500 });
+    return new Response(JSON.stringify({ success: false, errors: ["Missing Shopify authentication"] }), { status: 401 });
   }
+
+  // const PRIVATE_APP_TOKEN = process.env.PRIVATE_APP_TOKEN || "";
+  // const shop = process.env.SHOPIFY_SHOP_DOMAIN || "";
+
+  // if (!PRIVATE_APP_TOKEN || !shop) {
+  //   return json({ success: false, error: "Missing private app credentials" }, { status: 500 });
+  // }
 
   const fetchShopify = async (url: string, options: RequestInit = {}) => {
     const res = await fetch(`https://${shop}/admin/api/2024-10/${url}`, {
