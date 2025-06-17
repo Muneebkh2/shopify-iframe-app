@@ -16,20 +16,19 @@ import enTranslations from "@shopify/polaris/locales/en.json";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  // This authenticates the admin session and attaches App Bridge headers
-  const { admin } = await import("./shopify.server").then((mod) =>
-    mod.default.authenticate.admin(request)
-  );
-
-  // Provide what's needed for the front end: API key, shop, and host
   const url = new URL(request.url);
-  const host = url.searchParams.get("host")!;
-  const shop = admin.shop;
+  const host = url.searchParams.get("host");
+  if (!host) {
+    throw new Response("Missing host", { status: 400 });
+  }
+
+  const { authenticate } = await import("./shopify.server");
+  const { session } = await authenticate.admin(request);
 
   return json({
     apiKey: process.env.SHOPIFY_API_KEY,
     host,
-    shop,
+    shop: session.shop,
   });
 };
 
