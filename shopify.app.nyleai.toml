@@ -3,7 +3,7 @@
 client_id = "45be3ab4cd698973a3ef58eb0d7ef538"
 name = "nyle.ai-1"
 handle = "nyle-ai-1"
-application_url = "https://application.nyle.ai/"
+application_url = "https://store.nyle.ai/"
 embedded = true
 
 [build]
@@ -19,9 +19,9 @@ scopes = "read_products,read_themes,write_products,write_themes"
 
 [auth]
 redirect_urls = [
-  "https://application.nyle.ai/auth/callback",
-  "https://application.nyle.ai/auth/shopify/callback",
-  "https://application.nyle.ai/api/auth/callback"
+  "https://store.nyle.ai/auth/callback",
+  "https://store.nyle.ai/auth/shopify/callback",
+  "https://store.nyle.ai/api/auth/callback"
 ]
 
 [pos]
